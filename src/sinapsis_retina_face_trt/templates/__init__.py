@@ -1,60 +1,30 @@
 # -*- coding: utf-8 -*-
+import importlib
+from typing import Any, Callable, cast
+
+_root_lib_path = "sinapsis_retina_face_trt.templates"
 
 
-from typing import Callable, cast
+_template_lookup = {
+    "RetinaFacePytorch": f"{_root_lib_path}.retina_face.retina_face_pytorch",
+    "RetinaFacePytorchTRT": f"{_root_lib_path}.retina_face.retina_face_pytorch_trt",
+    "RetinaFacePytorchTRTTorchOnly": f"{_root_lib_path}.retina_face.retina_face_pytorch_trt",
+    "PytorchEmbeddingSearch": f"{_root_lib_path}.retina_face.pytorch_embedding_search_from_gallery",
+    "Facenet512EmbeddingExtractorTRT": f"{_root_lib_path}.retina_face.deepface_face_recognition",
+    "Facenet512EmbeddingExtractorTRTDev": f"{_root_lib_path}.retina_face.deepface_face_recognition_dev",
+    "FaceVerificationFromGallery": f"{_root_lib_path}.retina_face.face_verification_from_gallery",
+}
 
 
-def __getattr__(name: str) -> Callable:
-    match name:
-        case "RetinaFacePytorch":
-            from .retina_face.retina_face_pytorch import RetinaFacePytorch
+def __getattr__(name: str) -> Callable[..., Any]:
+    if name in _template_lookup:
+        module = importlib.import_module(_template_lookup[name])
+        attr = getattr(module, name)
+        if callable(attr):
+            return cast(Callable[..., Any], attr)
+        raise TypeError(f"Attribute `{name}` in `{_template_lookup[name]}` is not callable.")
 
-            returnModule = cast("RetinaFacePytorch", RetinaFacePytorch)
-        case "RetinaFacePytorchTRT":
-            from .retina_face.retina_face_pytorch_trt import RetinaFacePytorchTRT
-
-            returnModule = cast("RetinaFacePytorchTRT", RetinaFacePytorchTRT)
-        case "RetinaFacePytorchTRTTorchOnly":
-            from .retina_face.retina_face_pytorch_trt import (
-                RetinaFacePytorchTRTTorchOnly,
-            )
-
-            returnModule = cast("RetinaFacePytorchTRTTorchOnly", RetinaFacePytorchTRTTorchOnly)
-        case "PytorchEmbeddingSearch":
-            from .retina_face.pytorch_embedding_search_from_gallery import (
-                PytorchEmbeddingSearch,
-            )
-
-            returnModule = cast("PytorchEmbeddingSearch", PytorchEmbeddingSearch)
-        case "PytorchEmbeddingExtractor":
-            from .retina_face.deepface_face_recognition import (
-                PytorchEmbeddingExtractor,
-            )
-
-            returnModule = cast("PytorchEmbeddingExtractor", PytorchEmbeddingExtractor)
-        case "Facenet512EmbeddingExtractorTRT":
-            from .retina_face.deepface_face_recognition import (
-                Facenet512EmbeddingExtractorTRT,
-            )
-
-            returnModule = cast("Facenet512EmbeddingExtractorTRT", Facenet512EmbeddingExtractorTRT)
-        case "Facenet512EmbeddingExtractorTRTDev":
-            from .retina_face.deepface_face_recognition_dev import (
-                Facenet512EmbeddingExtractorTRTDev,
-            )
-
-            returnModule = cast("Facenet512EmbeddingExtractorTRTDev", Facenet512EmbeddingExtractorTRTDev)
-        case _:
-            raise AttributeError(f"module {__name__!r} has no template {name!r}")
-    return returnModule
+    raise AttributeError(f"template `{name}` not found in {_root_lib_path}")
 
 
-__all__ = [
-    "Facenet512EmbeddingExtractorTRT",
-    "Facenet512EmbeddingExtractorTRTDev",
-    "PytorchEmbeddingExtractor",
-    "PytorchEmbeddingSearch",
-    "RetinaFacePytorch",
-    "RetinaFacePytorchTRT",
-    "RetinaFacePytorchTRTTorchOnly",
-]
+__all__ = list(_template_lookup.keys())

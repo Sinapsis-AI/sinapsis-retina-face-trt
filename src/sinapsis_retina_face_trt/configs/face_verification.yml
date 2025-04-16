@@ -1,0 +1,30 @@
+agent:
+  name: face_detection
+  description: >
+    Agent to produce face embeddings from face predicted by RetinaFace model.
+    Face embeddings are used to compute similarity score in webapp.  
+
+templates:
+- template_name: InputTemplate-1
+  class_name: InputTemplate
+  attributes: {}
+
+- template_name: RetinaFacePytorch-1
+  class_name: RetinaFacePytorchTRT
+  template_input: InputTemplate-1
+  attributes:
+    return_key_points: true
+    confidence_threshold: 0.7
+    local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"  
+
+- template_name: EmbeddingExtractor-1
+  class_name: Facenet512EmbeddingExtractorTRTDev
+  template_input: RetinaFacePytorch-1
+  attributes:
+    from_bbox_crop: true
+    force_compilation: false
+    deep_copy_image: true
+
+
+
+

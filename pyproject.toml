@@ -1,22 +1,18 @@
 [project]
 name = "sinapsis-retina-face-trt"
-version = "0.1.3"
+version = "0.1.0"
 description = "trt version of retina face and facenet"
 authors = [
-    {name = "SinapsisAI", email = "dev@sinapsis-ai.com"},
+    {name = "SinapsisAI", email = "dev@sinapsis.tech"},
 ]
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "albumentations>=1.4.17",
-    "packaging>=24.1",
-    "polars>=1.9.0",
-    "retinaface-pytorch==0.0.7",
-    "sinapsis",
-    "sinapsis-data-readers",
-    "sinapsis-data-tools",
-    "sinapsis-data-visualization",
-    "sinapsis-data-writers",
+    "packaging>=24.2",
+    "polars>=1.26.0",
+    "retinaface-pytorch>=0.0.7",
+    "sinapsis>=0.2.3",
+    "sinapsis-data-readers>=0.1.2",
 ]
 
 [dependency-groups]
@@ -27,17 +23,20 @@ dev = [
 [project.optional-dependencies]
 model-conversion = [
     "deepface==0.0.92",
-    "sinapsis-framework-converter[onnx,tensorflow,tensorrt,torch]",
-]
-visualization = [
-    "matplotlib>=3.9.2",
+    "sinapsis-framework-converter[all]>=0.1.0",
 ]
 webapp-gradio = [
-    "gradio==5.1.0",
+    "sinapsis-retina-face-trt[sinapsis-data-visualization]",
+    "sinapsis[webapp]>=0.2.3",
 ]
-webapp-streamlit = [
-    "streamlit-webrtc>=0.47.9",
-    "streamlit==1.38.0",
+sinapsis-data-visualization = [
+    "sinapsis-data-visualization[visualization-matplotlib]>=0.1.0",
+]
+sinapsis-data-writers = [
+    "sinapsis-data-writers>=0.1.1",
+]
+all = [
+    "sinapsis-retina-face-trt[dev,model-conversion,sinapsis-data-visualization,sinapsis-data-writers,webapp-gradio]",
 ]
 
 
@@ -67,11 +66,14 @@ lint.ignore = ['ANN401']
 line-length = 120
 show-fixes = true
 
+[[tool.uv.index]]
+url = "https://pypi.sinapsis.tech/"
 
 [tool.uv.sources]
-sinapsis = { git = "ssh://git@github.com/Corteza-ai/sinapsis" }
-sinapsis-data-tools = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools" }
-sinapsis-data-readers = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools.git", subdirectory = "packages/sinapsis_data_readers" }
-sinapsis-data-writers = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools.git", subdirectory = "packages/sinapsis_data_writers" }
-sinapsis-data-visualization = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools.git", subdirectory = "packages/sinapsis_data_visualization" }
-sinapsis-framework-converter = { git = "ssh://git@github.com/Corteza-ai/sinapsis-framework-converter", branch = "UAIS-521-fix/Update-torch-and-trt-dependencies" }
+sinapsis-retina-face-trt = { workspace = true }
+
+[project.urls]
+Homepage = "https://sinapsis.tech"
+Documentation = "https://docs.sinapsis.tech/docs"
+Tutorials = "https://docs.sinapsis.tech/tutorials"
+Repository = "https://github.com/Sinapsis-AI/sinapsis-retina-face-trt.git"

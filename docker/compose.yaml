@@ -11,7 +11,7 @@ services:
     shm_size: '8gb'
     environment:
       PYTHONPATH: /lib/python3.10/:/app/.venv/lib/python3.10/site-packages
-      AGENT_CONFIG_PATH: "src/sinapsis_retina_face_trt/configs/face_recognition.yml"
+      
       GRADIO_SHARE_APP: ${GRADIO_SHARE_APP:-false}
       PYTHONUNBUFFERED: 1
     volumes:
@@ -19,7 +19,7 @@ services:
       - "~/.cache/torch:/root/.cache/torch"
       - "~/.cache/sinapsis/:/root/.cache/sinapsis"
       - "../webapps/:/app/webapps"
-      - "../src/sinapsis_retina_face_trt/configs/:/app/src/sinapsis_retina_face_trt/configs/"
+      - "../src/sinapsis_retina_face_trt/configs/:/app/sinapsis_retina_face_trt/configs/"
 
     network_mode: "host"
     working_dir: /app

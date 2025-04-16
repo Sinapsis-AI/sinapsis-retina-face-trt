@@ -12,7 +12,7 @@ from .model_converters.face_net_converter import FaceNetConverter
 
 class Facenet512EmbeddingExtractorTRTDev(PytorchEmbeddingExtractor):
     """
-    Same as Facenet512EmbeddingExtractorTRTD except this class converts the model
+    Same as Facenet512EmbeddingExtractorTRT except this class converts the model
      at run time as opposed to 'Facenet512EmbeddingExtractorTRTDev' which expects
      the model to already be converted and stored locally.
     This template also has a set of extra dependencies such as 'deepface',

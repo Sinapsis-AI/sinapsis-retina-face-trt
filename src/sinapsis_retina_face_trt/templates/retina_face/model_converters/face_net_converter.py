@@ -32,7 +32,7 @@ class FaceNetConverter(FrameworkConverterTRT, FrameworkConverterTFONNX, Framewor
         """Returns path to the onnx model"""
         return Path(
             join(
-                str(self._model_file_path().absolute()),
+                str(self.model_file_path().absolute()),
                 f"{self.TF_DEFAULT_SAVE_NAME}{ModelExtensions.ONNX_FILE_EXTENSION}",
             )
         )
@@ -41,7 +41,7 @@ class FaceNetConverter(FrameworkConverterTRT, FrameworkConverterTFONNX, Framewor
         """Returns path to trt model"""
         return Path(
             join(
-                str(self._model_file_path().absolute()),
+                str(self.model_file_path().absolute()),
                 f"{self.TF_DEFAULT_SAVE_NAME}{ModelExtensions.TRT_MODEL_EXTENSION}",
             )
         )

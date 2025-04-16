@@ -128,7 +128,8 @@ class PytorchEmbeddingExtractor(Template):
         """
         for ann in image_packet.annotations:
             crop = crop_bbox_from_img(ann, image_packet.content)
-            if crop:
+
+            if crop is not None and crop.size >= 4:
                 ann.embedding = self._infer(crop)
 
     def execute(self, container: DataContainer) -> DataContainer:
@@ -167,19 +168,19 @@ class Facenet512EmbeddingExtractorTRT(PytorchEmbeddingExtractor):
         deep_copy_image: true
         model_local_path: '/path/to/resnet/model'
         model_name: Facenet512
-        input_shape: 160
+        input_shape: (160, 160)
 
     """
 
     class AttributesBaseModel(PytorchEmbeddingExtractor.AttributesBaseModel):
-        model_local_path: str
+        local_model_path: str
         model_name: str = "Facenet512"
-        input_shape: int = 160
+        input_shape: tuple[int] = (160, 160)
 
     def _build_model(self) -> tuple[TensorrtTorchWrapper, int]:
         """
         Builds a trt model instance by loading a trt engine file
         from a local path
         """
-        trt_model = TensorrtTorchWrapper(self.model_local_path, output_as_value_tuple=False)
+        trt_model = TensorrtTorchWrapper(self.attributes.local_model_path, output_as_value_tuple=False)
         return trt_model, self.attributes.input_shape

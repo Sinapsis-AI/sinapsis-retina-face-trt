@@ -1,9 +1,19 @@
 services:
-  sinapsis-retina-face-gradio:
+  sinapsis-face-recognition-gradio:
     extends:
       service: sinapsis-retina-face-trt-main
       file: compose.yaml
-    container_name: sinapsis-retina-face-gradio
+    container_name: sinapsis-face-recognition-gradio
+    environment:
+      AGENT_CONFIG_PATH: "/app/sinapsis_retina_face_trt/configs/face_recognition.yml"
     volumes:
       - "$GALLERY_ROOT_DIR:/opt/app/dataset"
-    command: python3 webapps/gradio_live_demo.py
+    command: python3 webapps/face_recognition_demo.py
+  sinapsis-verification-mode-gradio:
+    extends:
+      service: sinapsis-retina-face-trt-main
+      file: compose.yaml
+    container_name: sinapsis-verification-mode-gradio
+    environment:
+      AGENT_CONFIG_PATH: "/app/sinapsis_retina_face_trt/configs/face_verification.yml"
+    command: python3 webapps/verification_mode_demo.py

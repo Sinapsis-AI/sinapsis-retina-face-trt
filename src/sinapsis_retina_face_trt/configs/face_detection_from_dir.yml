@@ -1,5 +1,8 @@
 agent:
   name: face_detection
+  description: >
+    Agent to perform face detection to images loaded from a local dir, 
+    inference results with drawed bboxes are stored in disk. 
 
 templates:
 - template_name: InputTemplate-1
@@ -12,7 +15,7 @@ templates:
   attributes:
     data_dir: /opt/app/datasets/vision/detection/lfw
     load_on_init : true
-    samples_to_load : 1
+    samples_to_load : 10
     batch_size : 10
 
 - template_name: RetinaFacePytorch-1
@@ -35,7 +38,7 @@ templates:
   class_name: ImageSaver
   template_input: BBoxDrawer
   attributes:
-    save_dir: "examples/inference_results/"
+    save_dir: "artifacts/inference_results/"
     root_dir: ""
     extension: jpg
     save_full_image: true

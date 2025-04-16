@@ -1,5 +1,8 @@
 agent:
   name: face_recognition
+  description: >
+    Agent to perform face detection and recognition, predicted face embeddings
+    are compared against face embeddings stored in gallery file.
 
 templates:
 - template_name: InputTemplate-1
@@ -18,7 +21,10 @@ templates:
   class_name: PytorchEmbeddingSearch
   template_input: RetinaFacePytorch-1
   attributes:
-    gallery_file: webapps/lfw_gallery.gallery
+    k_value: 3
+    gallery_file: artifacts/gallery_files/lfw_gallery.gallery
+    metric: cosine
+    similarity_threshold: 0.5
     image_root_dir:  /opt/app/dataset
     model_kwargs:
       metadata:

@@ -1,0 +1,69 @@
+agent:
+  name: face_verification
+  description: >
+    Agent to perform face verification by comparing predicted face embeddings
+    against embeddings stored in a gallery file.
+
+templates:
+- template_name: InputTemplate-1
+  class_name: InputTemplate
+  attributes: {}
+
+- template_name: FolderImageDatasetCV2-1
+  class_name: FolderImageDatasetCV2
+  template_input: InputTemplate-1
+  attributes:
+    data_dir: artifacts/input_data/samples
+    load_on_init : true
+    samples_to_load : 10
+    batch_size : 10
+
+- template_name: RetinaFacePytorch-1
+  class_name: RetinaFacePytorchTRT
+  template_input: FolderImageDatasetCV2-1
+  attributes:
+    return_key_points: true
+    confidence_threshold: 0.6
+    local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
+  
+- template_name: FaceVerification-1
+  class_name: FaceVerificationFromGallery
+  template_input: RetinaFacePytorch-1
+  attributes:
+    similarity_threshold: 0.5
+    image_root_dir:  artifacts/input_data/gallery/person_name
+    gallery_file: artifacts/gallery_files/gallery.gallery
+    use_face_detector_for_gallery_creation: True
+    force_build_from_dir: true
+    model_kwargs:
+      metadata:
+        template_instance_name: FaceVerification-1
+        agent_name: face_verification
+    face_detector_kwargs:
+      metadata:
+        template_instance_name: FaceVerification-1
+        agent_name: face_verification
+      return_key_points: true
+      confidence_threshold: 0.6
+      local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
+      
+- template_name: BBoxDrawer
+  class_name: BBoxDrawer
+  template_input: FaceVerification-1
+  attributes:
+    draw_boxes: true
+    draw_key_points: true
+    randomized_color: false
+    overwrite: true
+
+- template_name: ImageSaver
+  class_name: ImageSaver
+  template_input: BBoxDrawer
+  attributes:
+    save_dir: "artifacts/inference_results/"
+    root_dir: ""
+    extension: jpg
+    save_full_image: true
+    save_bbox_crops: false
+
+
