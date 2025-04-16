@@ -1,0 +1,44 @@
+agent:
+  name: face_detection
+
+templates:
+- template_name: InputTemplate-1
+  class_name: InputTemplate
+  attributes: {}
+
+- template_name: FolderImageDatasetCV2-1
+  class_name: FolderImageDatasetCV2
+  template_input: InputTemplate-1
+  attributes:
+    data_dir: /opt/app/datasets/vision/detection/lfw
+    load_on_init : true
+    samples_to_load : 1
+    batch_size : 10
+
+- template_name: RetinaFacePytorch-1
+  class_name: RetinaFacePytorchTRT
+  template_input: FolderImageDatasetCV2-1
+  attributes:
+    return_key_points: true
+    confidence_threshold: 0.3
+    local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
+
+- template_name: BBoxDrawer
+  class_name: BBoxDrawer
+  template_input: RetinaFacePytorch-1
+  attributes:
+    draw_boxes: true
+    draw_key_points: true
+    randomized_color: false
+
+- template_name: ImageSaver
+  class_name: ImageSaver
+  template_input: BBoxDrawer
+  attributes:
+    save_dir: "examples/inference_results/"
+    root_dir: ""
+    extension: jpg
+    save_full_image: true
+    save_bbox_crops: false
+
+

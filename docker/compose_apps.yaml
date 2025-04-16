@@ -1,0 +1,9 @@
+services:
+  sinapsis-retina-face-gradio:
+    extends:
+      service: sinapsis-retina-face-trt-main
+      file: compose.yaml
+    container_name: sinapsis-retina-face-gradio
+    volumes:
+      - "$GALLERY_ROOT_DIR:/opt/app/dataset"
+    command: python3 webapps/gradio_live_demo.py

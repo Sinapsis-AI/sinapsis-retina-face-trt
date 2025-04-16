@@ -1,0 +1,34 @@
+agent:
+  name: face_recognition
+
+templates:
+- template_name: InputTemplate-1
+  class_name: InputTemplate
+  attributes: {}
+
+- template_name: RetinaFacePytorch-1
+  class_name: RetinaFacePytorchTRT
+  template_input: InputTemplate-1
+  attributes:
+    return_key_points: true
+    confidence_threshold: 0.3
+    local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
+
+- template_name: PytorchEmbeddingSearch-1
+  class_name: PytorchEmbeddingSearch
+  template_input: RetinaFacePytorch-1
+  attributes:
+    gallery_file: webapps/lfw_gallery.gallery
+    image_root_dir:  /opt/app/dataset
+    model_kwargs:
+      metadata:
+        template_instance_name: PytorchEmbeddingSearch-1
+        agent_name: face_recognition
+
+- template_name: BBoxDrawer
+  class_name: BBoxDrawer
+  template_input: PytorchEmbeddingSearch-1
+  attributes:
+    draw_boxes: true
+    draw_key_points: true
+    randomized_color: false

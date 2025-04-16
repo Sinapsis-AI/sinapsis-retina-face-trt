@@ -1,0 +1,32 @@
+agent:
+  name: face_detection
+
+templates:
+- template_name: InputTemplate-1
+  class_name: InputTemplate
+  attributes: {}
+# UNCOMMENT IF YOU'D LIKE TO USE PYTORCH WITHOUT TENSORRT
+#- template_name: RetinaFacePytorch-1
+#  class_name: RetinaFacePytorchTRTTorchOnly
+#  template_input: InputTemplate-1
+#  attributes:
+#    return_key_points: true
+#    confidence_threshold: 0.3
+#    local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.ep"
+##    force_compilation: True
+
+- template_name: RetinaFacePytorch-1
+  class_name: RetinaFacePytorchTRT
+  template_input: InputTemplate-1
+  attributes:
+    return_key_points: true
+    confidence_threshold: 0.3
+    local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
+
+- template_name: BBoxDrawer
+  class_name: BBoxDrawer
+  template_input: RetinaFacePytorch-1
+  attributes:
+    draw_boxes: true
+    draw_key_points: true
+    randomized_color: false

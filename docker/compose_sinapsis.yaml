@@ -1,0 +1,7 @@
+services:
+  sinapsis-retina-face-inference:
+    extends:
+      service:  sinapsis-retina-face-gradio
+      file: compose.yaml
+    container_name: sinapsis-retina-face-inference
+    command: /app/.venv/bin/sinapsis run src/sinapsis_retina_face_trt/configs/face_detection_from_dir.yml

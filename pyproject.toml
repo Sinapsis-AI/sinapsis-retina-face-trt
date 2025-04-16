@@ -1,0 +1,77 @@
+[project]
+name = "sinapsis-retina-face-trt"
+version = "0.1.3"
+description = "trt version of retina face and facenet"
+authors = [
+    {name = "SinapsisAI", email = "dev@sinapsis-ai.com"},
+]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "albumentations>=1.4.17",
+    "packaging>=24.1",
+    "polars>=1.9.0",
+    "retinaface-pytorch==0.0.7",
+    "sinapsis",
+    "sinapsis-data-readers",
+    "sinapsis-data-tools",
+    "sinapsis-data-visualization",
+    "sinapsis-data-writers",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8.3",
+    "pre-commit>=4.0.1",
+]
+[project.optional-dependencies]
+model-conversion = [
+    "deepface==0.0.92",
+    "sinapsis-framework-converter[onnx,tensorflow,tensorrt,torch]",
+]
+visualization = [
+    "matplotlib>=3.9.2",
+]
+webapp-gradio = [
+    "gradio==5.1.0",
+]
+webapp-streamlit = [
+    "streamlit-webrtc>=0.47.9",
+    "streamlit==1.38.0",
+]
+
+
+[tool.ruff]
+lint.select = [
+    "ARG",   # Unused arguments
+    "ANN",
+    "BLE",   # Blind except
+    "C4",    # Comprehensions
+    "E",     # Errors
+    "F",     # Pyflakes
+    "FIX",   # "FIXME-comments"
+    "FLY",   # F-strings
+    "I",     # Isort
+    "PERF",  # Unnecessary performance costs
+    "PIE",   # Unnecessary code
+    "RUF",   # Ruff
+    "RSE",   # Raise
+    "SIM",   # Code simplification
+    "SLOT",  # __slots__
+    "T10",   # Debugger
+    "T20",   # Print
+    "TD",    # "TODO-comments"
+    "TID",   # Tidy imports
+]
+lint.ignore = ['ANN401']
+line-length = 120
+show-fixes = true
+
+
+[tool.uv.sources]
+sinapsis = { git = "ssh://git@github.com/Corteza-ai/sinapsis" }
+sinapsis-data-tools = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools" }
+sinapsis-data-readers = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools.git", subdirectory = "packages/sinapsis_data_readers" }
+sinapsis-data-writers = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools.git", subdirectory = "packages/sinapsis_data_writers" }
+sinapsis-data-visualization = { git = "ssh://git@github.com/Corteza-ai/sinapsis-data-tools.git", subdirectory = "packages/sinapsis_data_visualization" }
+sinapsis-framework-converter = { git = "ssh://git@github.com/Corteza-ai/sinapsis-framework-converter", branch = "UAIS-521-fix/Update-torch-and-trt-dependencies" }
