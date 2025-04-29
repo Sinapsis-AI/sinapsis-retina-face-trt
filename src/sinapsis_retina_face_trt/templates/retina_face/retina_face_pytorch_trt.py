@@ -8,7 +8,7 @@ import torch
 import torch.nn.functional as F
 from retinaface.net import FPN
 from retinaface.predict_single import Model as RetinaFaceModel
-from sinapsis_core.template_base import TemplateAttributeType
+from sinapsis_core.template_base.base_models import TemplateAttributeType
 from sinapsis_framework_converter.framework_converter.framework_converter_torch import (
     FrameworkConverterTorch,
 )

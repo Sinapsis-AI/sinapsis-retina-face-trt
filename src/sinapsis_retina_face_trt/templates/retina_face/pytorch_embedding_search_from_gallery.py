@@ -11,8 +11,8 @@ from pydantic import BaseModel, ConfigDict, Field
 from pydantic.dataclasses import dataclass
 from sinapsis_core.data_containers.annotations import BoundingBox, ImageAnnotations
 from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket
-from sinapsis_core.template_base import (
-    Template,
+from sinapsis_core.template_base import Template
+from sinapsis_core.template_base.base_models import (
     TemplateAttributes,
     TemplateAttributeType,
 )
