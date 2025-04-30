@@ -13,7 +13,7 @@ from sinapsis_core.data_containers.annotations import (
 )
 from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket
 from sinapsis_core.template_base import Template
-from sinapsis_core.template_base.base_models import TemplateAttributes
+from sinapsis_core.template_base.base_models import OutputTypes, TemplateAttributes, UIPropertiesMetadata
 
 
 @dataclass(frozen=True)
@@ -62,6 +62,7 @@ class RetinaFacePytorch(Template):
 
     """
 
+    UIProperties = UIPropertiesMetadata(category="RetinaFace", output_type=OutputTypes.IMAGE)
     class AttributesBaseModel(TemplateAttributes):
         """Template attributes for the RetinaFacePytorch template.
         cuda (bool): Device to be used. If marked as True, it will use GPU,

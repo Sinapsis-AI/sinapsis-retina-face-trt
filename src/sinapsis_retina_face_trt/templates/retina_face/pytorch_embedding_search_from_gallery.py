@@ -13,8 +13,10 @@ from sinapsis_core.data_containers.annotations import BoundingBox, ImageAnnotati
 from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket
 from sinapsis_core.template_base import Template
 from sinapsis_core.template_base.base_models import (
+    OutputTypes,
     TemplateAttributes,
     TemplateAttributeType,
+    UIPropertiesMetadata,
 )
 from sinapsis_data_readers.templates.image_readers.image_folder_reader_cv2 import (
     FolderImageDatasetCV2,
@@ -150,7 +152,7 @@ class PytorchEmbeddingSearch(Template):
     }
 
     PREDICTION_CLASS_LABEL = 1
-
+    UIProperties = UIPropertiesMetadata(category="RetinaFace", output_type=OutputTypes.IMAGE)
     class AttributesBaseModel(TemplateAttributes):
         """Attributes for the PytorchEmbeddingSearch Template
 
