@@ -22,6 +22,7 @@ from sinapsis_data_readers.templates.image_readers.image_folder_reader_cv2 impor
     FolderImageDatasetCV2,
 )
 
+from sinapsis_retina_face_trt.helpers.tags import Tags
 from sinapsis_retina_face_trt.templates.retina_face.retina_face_pytorch import RetinaFacePytorch
 from sinapsis_retina_face_trt.templates.retina_face.retina_face_pytorch_trt import (
     RetinaFacePytorchTRT,
@@ -152,7 +153,20 @@ class PytorchEmbeddingSearch(Template):
     }
 
     PREDICTION_CLASS_LABEL = 1
-    UIProperties = UIPropertiesMetadata(category="RetinaFace", output_type=OutputTypes.IMAGE)
+    UIProperties = UIPropertiesMetadata(
+        category="RetinaFace",
+        output_type=OutputTypes.IMAGE,
+        tags=[
+            Tags.EMBEDDINGS,
+            Tags.GALLERY_SEARCH,
+            Tags.IMAGE,
+            Tags.MODELS,
+            Tags.PYTORCH,
+            Tags.RETINA_FACE,
+            Tags.TRT,
+        ],
+    )
+
     class AttributesBaseModel(TemplateAttributes):
         """Attributes for the PytorchEmbeddingSearch Template
 
@@ -399,3 +413,7 @@ class PytorchEmbeddingSearch(Template):
             val, index = dist.topk(self.attributes.k_value, largest=True)
 
         return val, index
+    def reset_state(self, template_name: str | None = None) -> None:
+        if self.attributes.device == "cuda":
+            torch.cuda.empty_cache()
+        super().reset_state(template_name)

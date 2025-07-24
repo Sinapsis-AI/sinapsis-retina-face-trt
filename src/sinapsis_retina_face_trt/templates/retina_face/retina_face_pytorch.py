@@ -15,6 +15,8 @@ from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket
 from sinapsis_core.template_base import Template
 from sinapsis_core.template_base.base_models import OutputTypes, TemplateAttributes, UIPropertiesMetadata
 
+from sinapsis_retina_face_trt.helpers.tags import Tags
+
 
 @dataclass(frozen=True)
 class RetinaFacePytorchOutputKeys:
@@ -62,7 +64,12 @@ class RetinaFacePytorch(Template):
 
     """
 
-    UIProperties = UIPropertiesMetadata(category="RetinaFace", output_type=OutputTypes.IMAGE)
+    UIProperties = UIPropertiesMetadata(
+        category="RetinaFace",
+        output_type=OutputTypes.IMAGE,
+        tags=[Tags.IMAGE, Tags.FACE_LOCALISATION, Tags.MODELS, Tags.PYTORCH, Tags.RETINA_FACE],
+    )
+
     class AttributesBaseModel(TemplateAttributes):
         """Template attributes for the RetinaFacePytorch template.
         cuda (bool): Device to be used. If marked as True, it will use GPU,
@@ -193,3 +200,7 @@ class RetinaFacePytorch(Template):
                 )
                 self.parse_single_image_results(image_packet, pred)
         return container
+    def reset_state(self, template_name: str | None = None) -> None:
+        if self.attributes.cuda:
+            torch.cuda.empty_cache()
+        super().reset_state(template_name)

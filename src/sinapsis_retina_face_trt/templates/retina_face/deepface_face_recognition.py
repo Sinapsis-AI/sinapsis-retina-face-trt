@@ -18,6 +18,8 @@ from sinapsis_framework_converter.framework_converter.trt_torch_module_wrapper i
     TensorrtTorchWrapper,
 )
 
+from sinapsis_retina_face_trt.helpers.tags import Tags
+
 
 def crop_bbox_from_img(annotation: ImageAnnotations, image: np.ndarray) -> np.ndarray | None:
     """
@@ -75,7 +77,12 @@ class PytorchEmbeddingExtractor(Template):
         from_bbox_crop: bool | None = False
         force_compilation: bool | None = False
         deep_copy_image: bool | None = True
-    UIProperties = UIPropertiesMetadata(category="DeepFace", output_type=OutputTypes.IMAGE)
+
+    UIProperties = UIPropertiesMetadata(
+        category="DeepFace",
+        output_type=OutputTypes.IMAGE,
+        tags=[Tags.DEEPFACE, Tags.EMBEDDINGS, Tags.EMBEDDING_EXTRACTION, Tags.IMAGE],
+    )
 
     def __init__(
         self,
@@ -146,6 +153,13 @@ class PytorchEmbeddingExtractor(Template):
                 else:
                     img.embedding = self._infer(img.content)
             return container
+    def reset_state(self, template_name: str | None = None) -> None:
+        if self.attributes.device == "cuda":
+            torch.cuda.empty_cache()
+        super().reset_state(template_name)
+
+FacenetUIProperties = PytorchEmbeddingExtractor.UIProperties
+FacenetUIProperties.tags.extend([Tags.TRT, Tags.PYTORCHTRT])
 
 
 class Facenet512EmbeddingExtractorTRT(PytorchEmbeddingExtractor):
@@ -178,7 +192,7 @@ class Facenet512EmbeddingExtractorTRT(PytorchEmbeddingExtractor):
     class AttributesBaseModel(PytorchEmbeddingExtractor.AttributesBaseModel):
         local_model_path: str
         model_name: str = "Facenet512"
-        input_shape: tuple[int] = (160, 160)
+        input_shape: tuple[int, int] = (160, 160)
 
     def _build_model(self) -> tuple[TensorrtTorchWrapper, int]:
         """

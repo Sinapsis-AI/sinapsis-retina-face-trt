@@ -70,7 +70,7 @@ def demo() -> gr.Blocks:
         add_logo_and_title("Sinapsis RetinaFace TensorRT")
         with gr.Row():
             with gr.Column():
-                threshold = gr.Number(value=0.75, label="Similarity threshold")
+                threshold = gr.Number(value=0.5, label="Similarity threshold")
                 reference_img = gr.Image(label="Reference ID", sources=["upload", "clipboard"], type="numpy")
 
             with gr.Column():

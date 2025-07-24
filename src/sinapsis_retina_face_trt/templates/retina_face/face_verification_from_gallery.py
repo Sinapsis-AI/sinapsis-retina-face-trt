@@ -5,10 +5,14 @@ import numpy as np
 import torch
 from sinapsis_core.data_containers.data_packet import ImageAnnotations, ImagePacket
 
+from sinapsis_retina_face_trt.helpers.tags import Tags
 from sinapsis_retina_face_trt.templates.retina_face.deepface_face_recognition import crop_bbox_from_img
 from sinapsis_retina_face_trt.templates.retina_face.pytorch_embedding_search_from_gallery import (
     PytorchEmbeddingSearch,
 )
+
+FaceVerificationFromGalleryUIProperties = PytorchEmbeddingSearch.UIProperties
+FaceVerificationFromGalleryUIProperties.tags.extend([Tags.FACE_VERIFICATION])
 
 
 class FaceVerificationFromGallery(PytorchEmbeddingSearch):
@@ -45,6 +49,7 @@ class FaceVerificationFromGallery(PytorchEmbeddingSearch):
 
     VERIFIED = "verified"
     NOT_VERIFIED = "not-verified"
+    UIProperties = FaceVerificationFromGalleryUIProperties
 
     class AttributesBaseModel(PytorchEmbeddingSearch.AttributesBaseModel):
         """Attributes for FaceVerificationFromGallery template.
@@ -88,10 +93,12 @@ class FaceVerificationFromGallery(PytorchEmbeddingSearch):
             ann (ImageAnnotations): Image annotations to be updated.
         """
         if similarity_score > self.attributes.similarity_threshold:
+            self.logger.debug('FACE HAS BEEN IDENTIFIED')
             ann.label = self.attributes.labels_mapping.get(self.VERIFIED)
             ann.label_str = self.VERIFIED
             ann.confidence_score = similarity_score
         else:
+            self.logger.debug('FACE NOT IDENTIFIED')
             ann.label = self.attributes.labels_mapping.get(self.NOT_VERIFIED)
             ann.label_str = self.NOT_VERIFIED
             ann.confidence_score = similarity_score

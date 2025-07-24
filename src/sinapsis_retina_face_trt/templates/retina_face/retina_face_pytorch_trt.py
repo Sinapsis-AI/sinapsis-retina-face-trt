@@ -22,7 +22,13 @@ from sinapsis_framework_converter.framework_converter.trt_torch_module_wrapper i
     TensorrtTorchWrapper,
 )
 
+from sinapsis_retina_face_trt.helpers.tags import Tags
+
 from .retina_face_pytorch import RetinaFacePytorch
+from sinapsis_retina_face_trt.templates.retina_face.retina_face_pytorch import RetinaFacePytorch
+
+RetinaFacePytorchTRTUIProperties = RetinaFacePytorch.UIProperties
+RetinaFacePytorchTRTUIProperties.tags.extend([Tags.TRT, Tags.PYTORCHTRT])
 
 
 class CustomFPN(FPN):
@@ -114,6 +120,8 @@ class RetinaFacePytorchTRT(RetinaFacePytorch):
 
     """
 
+    UIProperties = RetinaFacePytorchTRTUIProperties
+
     class AttributesBaseModel(RetinaFacePytorch.AttributesBaseModel):
         """
         Attributes for RetinaFacePytorchTRT
@@ -140,13 +148,24 @@ class RetinaFacePytorchTRT(RetinaFacePytorch):
         self.convert_model()
         self._replace_retina_model()
 
+    def export_model_to_trt(self) -> None:
+        """Export model from torch to onnx and from onnx to tensorRT format."""
+        self.update_fpn()
+        self.model_exporter.export_torch_to_onnx(self.model.model)
+        self.model_exporter.export_onnx_to_trt()
+
     def convert_model(self) -> None:
         """Only convert if no local path provided or if force compilation is True"""
-        model_path = Path(self.attributes.local_model_path)
-        if self.model_exporter.force_export(model_path):
-            self.update_fpn()
-            self.model_exporter.export_torch_to_onnx(self.model.model)
-            self.model_exporter.export_onnx_to_trt()
+
+        if self.attributes.local_model_path is not None:
+            model_path = Path(self.attributes.local_model_path)
+
+            if self.model_exporter.force_export(model_path):
+                self.export_model_to_trt()
+            else:
+                self.logger.debug("No model conversion being performed due to engine file already existing.")
+        else:
+            self.export_model_to_trt()
 
     def update_fpn(self) -> None:
         """
@@ -215,16 +234,28 @@ class RetinaFacePytorchTRTTorchOnly(RetinaFacePytorch):
         self.convert_model()
         self._replace_retina_model()
 
+    def export_model_to_trt(self) -> None:
+        """Directly export model from torch to TorchTRT format."""
+
+        self.update_fpn()
+        self.model_exporter.export_torch_to_trt(self.model.model)
+
     def convert_model(self) -> None:
         """
         Converts model from torch to TorchTRT version. The model is saved in
         ExportedProgram format as explained in
         https://pytorch.org/TensorRT/user_guide/saving_models.html
         """
-        model_path = Path(self.attributes.local_model_path)
-        if self.model_exporter.force_export(model_path):
-            self.update_fpn()
-            self.model_exporter.export_torch_to_trt(self.model.model)
+
+        if self.attributes.local_model_path is not None:
+            model_path = Path(self.attributes.local_model_path)
+
+            if self.model_exporter.force_export(model_path):
+                self.export_model_to_trt()
+            else:
+                self.logger.debug("No model conversion being performed due to engine file already existing.")
+        else:
+            self.export_model_to_trt()
 
     def update_fpn(self) -> None:
         """
