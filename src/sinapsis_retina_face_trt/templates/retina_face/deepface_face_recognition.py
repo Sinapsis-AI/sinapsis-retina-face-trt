@@ -156,6 +156,7 @@ class PytorchEmbeddingExtractor(Template):
     def reset_state(self, template_name: str | None = None) -> None:
         if self.attributes.device == "cuda":
             torch.cuda.empty_cache()
+            torch.cuda.ipc_collect()
         super().reset_state(template_name)
 
 FacenetUIProperties = PytorchEmbeddingExtractor.UIProperties
