@@ -1,6 +1,6 @@
 [project]
 name = "sinapsis-retina-face-trt"
-version = "0.1.9"
+version = "0.1.10"
 description = "trt version of retina face and facenet"
 authors = [
     {name = "SinapsisAI", email = "dev@sinapsis.tech"},
@@ -24,7 +24,7 @@ dev = [
 [project.optional-dependencies]
 model-conversion = [
     "deepface==0.0.92",
-    "sinapsis-framework-converter>=0.1.8",
+    "sinapsis-framework-converter[all]>=0.1.8",
 ]
 webapp-gradio = [
     "sinapsis-retina-face-trt[sinapsis-data-visualization]",
