@@ -26,7 +26,9 @@ templates:
     metric: cosine
     similarity_threshold: 0.5
     image_root_dir:  /opt/app/dataset
+    model_to_use: "Facenet512EmbeddingExtractorTRTDev"
     model_kwargs:
+      tf_memory_limit: 1024
       metadata:
         template_instance_name: PytorchEmbeddingSearch-1
         agent_name: face_recognition
