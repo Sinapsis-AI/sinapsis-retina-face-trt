@@ -13,6 +13,7 @@ _template_lookup = {
     "Facenet512EmbeddingExtractorTRT": f"{_root_lib_path}.retina_face.deepface_face_recognition",
     "Facenet512EmbeddingExtractorTRTDev": f"{_root_lib_path}.retina_face.deepface_face_recognition_dev",
     "FaceVerificationFromGallery": f"{_root_lib_path}.retina_face.face_verification_from_gallery",
+    "EmbeddingComparison": f"{_root_lib_path}.embedding_comparison",
 }
 
 

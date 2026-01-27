@@ -1,0 +1,64 @@
+agent:
+  name: face_detection
+  description: >
+    Agent to produce face embeddings from face predicted by RetinaFace model.
+    Face embeddings are used to compute similarity score in webapp.  
+
+templates:
+- template_name: InputTemplate-1
+  class_name: InputTemplate
+  attributes: {}
+
+- template_name: FolderImageDatasetCV2-1
+  class_name: FolderImageDatasetCV2
+  template_input: InputTemplate-1
+  attributes:
+    data_dir: "/path/to/images/"
+    load_on_init : true
+    samples_to_load : 2
+    batch_size : 2
+
+- template_name: RetinaFacePytorch-1
+  class_name: RetinaFacePytorchTRT
+  template_input: FolderImageDatasetCV2-1
+  attributes:
+    return_key_points: true
+    confidence_threshold: 0.3
+    local_model_path: "/root/.cache/sinapsis/torch/hub/checkpoints/resnet50_2020-07-20.engine"
+    force_compilation: false
+- template_name: PytorchEmbeddingExtractor
+  class_name: Facenet512EmbeddingExtractorTRTDev
+  template_input: FolderImageDatasetCV2-1
+  attributes:
+    from_bbox_crop: True
+
+- template_name: EmbeddingComparison-1
+  class_name: EmbeddingComparison
+  template_input: PytorchEmbeddingExtractor
+  attributes:
+    threshold: 0.5
+    dimension:  0
+
+
+- template_name: BBoxDrawer
+  class_name: BBoxDrawer
+  template_input: EmbeddingComparison-1
+  attributes:
+    draw_boxes: true
+    draw_key_points: true
+    randomized_color: false
+    draw_extra_labels: True
+    draw_classification_label: false
+
+- template_name: ImageSaver
+  class_name: ImageSaver
+  template_input: BBoxDrawer
+  attributes:
+    save_dir: "artifacts/inference_results/"
+    root_dir: ""
+    extension: jpg
+    save_full_image: true
+    save_bbox_crops: false
+
+
+
