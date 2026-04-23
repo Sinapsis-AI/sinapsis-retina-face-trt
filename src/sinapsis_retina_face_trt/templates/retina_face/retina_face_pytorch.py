@@ -13,7 +13,12 @@ from sinapsis_core.data_containers.annotations import (
 )
 from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket
 from sinapsis_core.template_base import Template
-from sinapsis_core.template_base.base_models import OutputTypes, TemplateAttributes, UIPropertiesMetadata
+from sinapsis_core.template_base.base_models import (
+    OutputTypes,
+    TemplateAttributes,
+    TemplateAttributeType,
+    UIPropertiesMetadata,
+)
 
 from sinapsis_retina_face_trt.helpers.tags import Tags
 
@@ -92,19 +97,18 @@ class RetinaFacePytorch(Template):
         width: int = 960
         model_name: str = "resnet50_2020-07-20"
 
-    def __init__(
-        self,
-        attributes: dict[str, Any] | None = None,
-    ) -> None:
+    attributes: AttributesBaseModel
+
+    def __init__(self, attributes: TemplateAttributeType) -> None:
         super().__init__(attributes)
         self.device = "cuda" if self.attributes.cuda else "cpu"
         self.model = self.make_model()
 
-    def make_model(self) -> torch.nn.Module:
+    def make_model(self) -> Any:
         """Setup of the model with the corresponding init attributes.
         Sets in eval mode."""
         max_size = max(self.attributes.height, self.attributes.width)
-        model: torch.nn.Module = get_model(
+        model = get_model(
             self.attributes.model_name,
             max_size=max_size,
             device=self.device,
@@ -200,6 +204,7 @@ class RetinaFacePytorch(Template):
                 )
                 self.parse_single_image_results(image_packet, pred)
         return container
+
     def reset_state(self, template_name: str | None = None) -> None:
         if self.attributes.cuda:
             torch.cuda.empty_cache()

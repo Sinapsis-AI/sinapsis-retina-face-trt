@@ -1,3 +1,4 @@
+[![sp](https://img.shields.io/badge/lang-sp-red.svg)](https://github.com/Sinapsis-AI/sinapsis-retina-face-trt/blob/main/README.es.md)
 <h1 align="center">
 <br>
 <br>
@@ -37,7 +38,7 @@ uv pip install sinapsis-retina-face-trt
 ```
 or wiht raw pip
 ```bash
-pip install sinapsis-retina-face-trt 
+pip install sinapsis-retina-face-trt
 ```
 
 > [!IMPORTANT]
@@ -73,12 +74,12 @@ The **Sinapsis Retina Face TRT** module provides multiple templates for real-tim
 
 
 - **RetinaFacePytorch**. Runs face detection using RetinaFace implemented in PyTorch.
-- **RetinaFacePytorchTRT**. A TensorRT-optimized version of **RetinaFacePytorch** for faster inference. 
-- **RetinaFacePytorchTRTTorchOnly**. A Torch-TensorRT optimized version of RetinaFace, focusing solely on Torch-TRT acceleration. 
+- **RetinaFacePytorchTRT**. A TensorRT-optimized version of **RetinaFacePytorch** for faster inference.
+- **RetinaFacePytorchTRTTorchOnly**. A Torch-TensorRT optimized version of RetinaFace, focusing solely on Torch-TRT acceleration.
 - **PytorchEmbeddingSearch**. Performs similarity search over a gallery of embeddings.
 - **PytorchEmbeddingExtractor**. A base template for extracting embeddings from face images.
 - **Facenet512EmbeddingExtractorTRT**. Uses TensorRT for fast embedding extraction based on **Facenet512**.
-- **Facenet512EmbeddingExtractorTRTDev**. An alternative version of **Facenet512EmbeddingExtractorTRT** that converts the model at runtime. 
+- **Facenet512EmbeddingExtractorTRTDev**. An alternative version of **Facenet512EmbeddingExtractorTRT** that converts the model at runtime.
 - **FaceVerificationFromGallery**. Perform face verification by direct comparison between predicted face embeddings and face embeddings stored in a gallery file.
 
 
@@ -94,14 +95,14 @@ This configuration defines an **agent** and a sequence of **templates** to run r
 3. **Bounding Box Drawing (`BBoxDrawer`)**: Overlays bounding boxes on detected faces.
 4. **Saving Results (`ImageSaver`)**: Saves the processed images to the defined output directory.
 
-   
+
 <details>
   <summary id="docker"><strong><span style="font-size: 1.2em;">Config file</span></strong></summary>
-   
+
 ```yaml
 agent:
   name: face_detection
-  description: > 
+  description: >
     Agent to perform face detection by employing an accelerated TRT version of the RetinaFace model.
 
 templates:
@@ -150,12 +151,12 @@ To run the agent, you should run:
 
 ```bash
 sinapsis run /path/to/sinapsis-retina-face-trt/src/sinapsis_retina_face_trt/configs/face_recognition.yml
-``` 
+```
 </details>
 
 <h2 id="webapp">🌐 Webapp</h2>
 
-The webapps included in this repo provide interactive interfaces to showcase **real-time facial recognition** and **face verification mode** capabilities. 
+The webapps included in this repo provide interactive interfaces to showcase **real-time facial recognition** and **face verification mode** capabilities.
 
 > [!IMPORTANT]
 > To run the apps, you first need to clone this repository:
@@ -188,16 +189,16 @@ git clone https://github.com/sinapsis-ai/sinapsis-retina-face-trt.git
 We have created a small version of the [lfw](http://vis-www.cs.umass.edu/lfw/) dataset in the following [link](https://cortezaai-my.sharepoint.com/:f:/g/personal/natalia_corteza_ai/EtiIJWdgdlNCgr3L4-gbeRIBsLNbl5GHdQrgPgNK-SDIXg?e=AYZ3Xp)
 
 > [!NOTE]
-> The **face verification** app don't require you to build a dataset. For demo purposes, the app is designed to perform face validation by using only one image as reference which should be provided through the app interface. 
+> The **face verification** app don't require you to build a dataset. For demo purposes, the app is designed to perform face validation by using only one image as reference which should be provided through the app interface.
 
 > [!WARNING]
-> If you have cached versions of the retinaface or Facenet models, please remove them before running the app. 
-To remove cached versions, use (might need root permissions, in which case use sudo) 
+> If you have cached versions of the retinaface or Facenet models, please remove them before running the app.
+To remove cached versions, use (might need root permissions, in which case use sudo)
 
 <code> rm -rf ~/.cache/torch/hub/checkpoints/* && rm -rf ~/.cache/sinapsis/.deepface/weights/* </code>
 
 > [!NOTE]
-> If you'd like to enable external app sharing in Gradio use: 
+> If you'd like to enable external app sharing in Gradio use:
 `export GRADIO_SHARE_APP=True`
 
 <details>
@@ -232,7 +233,7 @@ docker logs -f sinapsis-face-recognition-gradio
 
 For **face verification app**
 ```bash
-docker logs -f sinapsis-verification-mode-gradio 
+docker logs -f sinapsis-verification-mode-gradio
 ```
 
 4. The logs will display the URL to access the webapp:

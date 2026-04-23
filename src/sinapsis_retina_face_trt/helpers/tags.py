@@ -2,7 +2,7 @@
 from enum import Enum
 
 
-class Tags(Enum):
+class Tags(str, Enum):
     DEEPFACE = "deepface"
     EMBEDDINGS = "embeddings"
     EMBEDDING_EXTRACTION = "embedding_extraction"

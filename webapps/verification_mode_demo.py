@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from typing import Literal
+from typing import Any, Literal
 
 import gradio as gr
 import numpy as np
@@ -23,11 +23,11 @@ class VerificationLabels:
 
 
 LABELS = VerificationLabels()
-VerificationType = Literal[LABELS.verified, LABELS.not_verified]
+VerificationType = Literal[LABELS.verified, LABELS.not_verified]  # ty: ignore[invalid-type-form]
 agent = generic_agent_builder(CONFIG_FILE)
 
 
-def get_embedding_from_container(container: DataContainer) -> torch.Tensor:
+def get_embedding_from_container(container: DataContainer) -> Any:
     """Extracts face embedding from image annotations.
 
     Args:
@@ -55,8 +55,8 @@ def face_verification(reference_img: np.ndarray, input_img: np.ndarray, threshol
     container_1 = agent(DataContainer(images=[ImagePacket(content=reference_img)]))
     container_2 = agent(DataContainer(images=[ImagePacket(content=input_img)]))
 
-    embeddings_1 = get_embedding_from_container(container_1)
-    embeddings_2 = get_embedding_from_container(container_2)
+    embeddings_1 = get_embedding_from_container(container_1)  # ty: ignore[invalid-argument-type]
+    embeddings_2 = get_embedding_from_container(container_2)  # ty: ignore[invalid-argument-type]
 
     dist = torch.nn.CosineSimilarity(dim=1)(embeddings_1, embeddings_2)
 
@@ -87,4 +87,4 @@ def demo() -> gr.Blocks:
 
 if __name__ == "__main__":
     live_interface = demo()
-    live_interface.launch(share=GRADIO_SHARE_APP)
+    live_interface.launch(share=bool(GRADIO_SHARE_APP))

@@ -72,7 +72,9 @@ class Facenet512EmbeddingExtractorTRTDev(PytorchEmbeddingExtractor):
         model_name: str = "Facenet512"
         tf_memory_limit: int | None = None
 
-    def _convert_model(self) -> Tuple[TensorrtTorchWrapper, int]:
+    attributes: AttributesBaseModel
+
+    def _convert_model(self) -> Tuple[TensorrtTorchWrapper, tuple[int, int]]:
         """
         Converts the 'Facenet512' model to trt version, using the Framework converter modules
             The pipeline starts by exporting from keras -> tensorflow -> onnx -> trt
@@ -90,7 +92,7 @@ class Facenet512EmbeddingExtractorTRTDev(PytorchEmbeddingExtractor):
         input_shape = model.model.input_shape[1:3]
         return trt_model, input_shape
 
-    def _build_model(self) -> Tuple[TensorrtTorchWrapper, int]:
+    def _build_model(self) -> Tuple[TensorrtTorchWrapper, tuple[int, int]]:
         """
         Executes the model conversion and returns the TensorrtTorchWrapper
         object and the shape of the model inputs

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod
 from copy import deepcopy
+from typing import Sequence, cast
 
 import cv2
 import numpy as np
@@ -78,6 +79,8 @@ class PytorchEmbeddingExtractor(Template):
         force_compilation: bool | None = False
         deep_copy_image: bool | None = True
 
+    attributes: AttributesBaseModel
+
     UIProperties = UIPropertiesMetadata(
         category="DeepFace",
         output_type=OutputTypes.IMAGE,
@@ -93,7 +96,7 @@ class PytorchEmbeddingExtractor(Template):
         self.device = "cuda"
 
     @abstractmethod
-    def _build_model(self) -> tuple[TensorrtTorchWrapper, int]: ...
+    def _build_model(self) -> tuple[TensorrtTorchWrapper, tuple[int, int]]: ...
 
     def _pre_process(self, image: np.ndarray) -> torch.Tensor:
         """
@@ -109,7 +112,7 @@ class PytorchEmbeddingExtractor(Template):
         """
 
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image = cv2.resize(image, self.input_shape)
+        image = cv2.resize(image, cast(Sequence, self.input_shape))
         mean, std = image.mean(), image.std()
         image = (image - mean) / std
         return torch.from_numpy(image).to(self.device).float()
@@ -126,7 +129,7 @@ class PytorchEmbeddingExtractor(Template):
         if self.attributes.deep_copy_image:
             image = deepcopy(image)
         image_as_tensor: torch.Tensor = self._pre_process(image)
-        embedding: torch.Tensor = self._model(image_as_tensor.unsqueeze(0))
+        embedding: torch.Tensor = self._model(image_as_tensor.unsqueeze(0)).cpu()  # ty: ignore[call-non-callable]
         return embedding
 
     def _infer_from_crops(self, image_packet: ImagePacket) -> None:
@@ -153,14 +156,26 @@ class PytorchEmbeddingExtractor(Template):
                 else:
                     img.embedding = self._infer(img.content)
             return container
+
     def reset_state(self, template_name: str | None = None) -> None:
-        if self.attributes.device == "cuda":
+        _ = template_name
+        if self.device == "cuda":
             torch.cuda.empty_cache()
             torch.cuda.ipc_collect()
-        super().reset_state(template_name)
+        if hasattr(self, "_model"):
+            del self._model
+
+        self._model = None
+        if hasattr(self, "input_shape"):
+            del self.input_shape
+
+        self.input_shape = None
+        self._model, self.input_shape = self._build_model()
+
 
 FacenetUIProperties = PytorchEmbeddingExtractor.UIProperties
-FacenetUIProperties.tags.extend([Tags.TRT, Tags.PYTORCHTRT])
+if FacenetUIProperties.tags is not None:
+    FacenetUIProperties.tags.extend([Tags.TRT, Tags.PYTORCHTRT])
 
 
 class Facenet512EmbeddingExtractorTRT(PytorchEmbeddingExtractor):
@@ -195,7 +210,9 @@ class Facenet512EmbeddingExtractorTRT(PytorchEmbeddingExtractor):
         model_name: str = "Facenet512"
         input_shape: tuple[int, int] = (160, 160)
 
-    def _build_model(self) -> tuple[TensorrtTorchWrapper, int]:
+    attributes: AttributesBaseModel
+
+    def _build_model(self) -> tuple[TensorrtTorchWrapper, tuple[int, int]]:
         """
         Builds a trt model instance by loading a trt engine file
         from a local path

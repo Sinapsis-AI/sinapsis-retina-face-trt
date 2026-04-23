@@ -2,7 +2,7 @@
 
 from copy import deepcopy
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import torch
 import torch.nn.functional as F
@@ -21,14 +21,14 @@ from sinapsis_framework_converter.framework_converter.framework_converter_trt im
 from sinapsis_framework_converter.framework_converter.trt_torch_module_wrapper import (
     TensorrtTorchWrapper,
 )
+from torch.nn import Module
 
 from sinapsis_retina_face_trt.helpers.tags import Tags
-
-from .retina_face_pytorch import RetinaFacePytorch
 from sinapsis_retina_face_trt.templates.retina_face.retina_face_pytorch import RetinaFacePytorch
 
 RetinaFacePytorchTRTUIProperties = RetinaFacePytorch.UIProperties
-RetinaFacePytorchTRTUIProperties.tags.extend([Tags.TRT, Tags.PYTORCHTRT])
+if RetinaFacePytorchTRTUIProperties.tags is not None:
+    RetinaFacePytorchTRTUIProperties.tags.extend([Tags.TRT, Tags.PYTORCHTRT])
 
 
 class CustomFPN(FPN):
@@ -140,8 +140,13 @@ class RetinaFacePytorchTRT(RetinaFacePytorch):
         force_compilation: bool = False
         local_model_path: str | None = None
 
+    attributes: AttributesBaseModel
+
     def __init__(self, attributes: TemplateAttributeType) -> None:
-        attributes["device"] = "cuda"  # enforce cuda
+        if isinstance(attributes, dict):
+            attributes["device"] = "cuda"  # enforce cuda
+        else:
+            attributes.device = "cuda"  # ty: ignore[unresolved-attribute]
         super().__init__(attributes)
 
         self.model_exporter = RetinaFaceConverter(self.attributes)
@@ -151,7 +156,7 @@ class RetinaFacePytorchTRT(RetinaFacePytorch):
     def export_model_to_trt(self) -> None:
         """Export model from torch to onnx and from onnx to tensorRT format."""
         self.update_fpn()
-        self.model_exporter.export_torch_to_onnx(self.model.model)
+        self.model_exporter.export_torch_to_onnx(cast(Module, self.model.model))
         self.model_exporter.export_onnx_to_trt()
 
     def convert_model(self) -> None:
@@ -227,6 +232,7 @@ class RetinaFacePytorchTRTTorchOnly(RetinaFacePytorch):
     """
 
     AttributesBaseModel = RetinaFacePytorchTRT.AttributesBaseModel
+    attributes: RetinaFacePytorchTRT.AttributesBaseModel
 
     def __init__(self, attributes: dict[str, Any]) -> None:
         super().__init__(attributes)
@@ -238,7 +244,7 @@ class RetinaFacePytorchTRTTorchOnly(RetinaFacePytorch):
         """Directly export model from torch to TorchTRT format."""
 
         self.update_fpn()
-        self.model_exporter.export_torch_to_trt(self.model.model)
+        self.model_exporter.export_torch_to_trt(cast(Module, self.model.model))
 
     def convert_model(self) -> None:
         """

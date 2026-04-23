@@ -12,7 +12,8 @@ from sinapsis_retina_face_trt.templates.retina_face.pytorch_embedding_search_fro
 )
 
 FaceVerificationFromGalleryUIProperties = PytorchEmbeddingSearch.UIProperties
-FaceVerificationFromGalleryUIProperties.tags.extend([Tags.FACE_VERIFICATION])
+if FaceVerificationFromGalleryUIProperties.tags is not None:
+    FaceVerificationFromGalleryUIProperties.tags.extend([Tags.FACE_VERIFICATION])
 
 
 class FaceVerificationFromGallery(PytorchEmbeddingSearch):
@@ -61,6 +62,8 @@ class FaceVerificationFromGallery(PytorchEmbeddingSearch):
 
         labels_mapping: ClassVar[dict[str, int]] = {"verified": 0, "not-verified": 1}
 
+    attributes: AttributesBaseModel
+
     def compute_similarity(
         self,
         img_crop: np.ndarray,
@@ -79,11 +82,11 @@ class FaceVerificationFromGallery(PytorchEmbeddingSearch):
             return None
 
         if self.attributes.metric == "cosine":
-            dist = torch.cosine_similarity(self.gallery.gallery, crop_embedding, dim=1)
-            return dist.max()
+            dist = torch.cosine_similarity(self.gallery.gallery, torch.Tensor(crop_embedding), dim=1)
+            return float(dist.max())
 
         dist = torch.norm(self.gallery.gallery - crop_embedding, dim=1, p=None)
-        return dist.min()
+        return float(dist.min())
 
     def update_annotations(self, similarity_score: float, ann: ImageAnnotations) -> None:
         """Update image annotations according to face similarity results.
@@ -93,12 +96,12 @@ class FaceVerificationFromGallery(PytorchEmbeddingSearch):
             ann (ImageAnnotations): Image annotations to be updated.
         """
         if similarity_score > self.attributes.similarity_threshold:
-            self.logger.debug('FACE HAS BEEN IDENTIFIED')
+            self.logger.debug("FACE HAS BEEN IDENTIFIED")
             ann.label = self.attributes.labels_mapping.get(self.VERIFIED)
             ann.label_str = self.VERIFIED
             ann.confidence_score = similarity_score
         else:
-            self.logger.debug('FACE NOT IDENTIFIED')
+            self.logger.debug("FACE NOT IDENTIFIED")
             ann.label = self.attributes.labels_mapping.get(self.NOT_VERIFIED)
             ann.label_str = self.NOT_VERIFIED
             ann.confidence_score = similarity_score

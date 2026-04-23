@@ -1,8 +1,11 @@
-from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket, ImageAnnotations
+# -*- coding: utf-8 -*-
+from typing import Any, Literal
+
 import torch
+from sinapsis_core.data_containers.data_packet import DataContainer, ImagePacket
 from sinapsis_core.template_base.base_models import TemplateAttributes, TemplateAttributeType
-from typing import Literal
 from sinapsis_core.template_base.template import Template
+
 
 class EmbeddingComparisonAttributes(TemplateAttributes):
     """Attributes for the template
@@ -12,9 +15,8 @@ class EmbeddingComparisonAttributes(TemplateAttributes):
     """
 
     threshold: float = 0.5
-    distance_method: Literal['PairwiseDistance', 'CosineSimilarity'] = 'CosineSimilarity'
+    distance_method: Literal["PairwiseDistance", "CosineSimilarity"] = "CosineSimilarity"
     dimension: int = 0
-
 
 
 class EmbeddingComparison(Template):
@@ -22,11 +24,20 @@ class EmbeddingComparison(Template):
     If embeddings are close or similar enough, it adds an annotation with the value of similarity.
     Otherwise, adds annotation with no match and the value of similarity.
     """
-    AttributesBaseModel =  EmbeddingComparisonAttributes
-    def __init__(self, attributes:TemplateAttributeType)->None:
+
+    AttributesBaseModel = EmbeddingComparisonAttributes
+
+    attributes: EmbeddingComparisonAttributes
+
+    def __init__(self, attributes: TemplateAttributeType) -> None:
         super().__init__(attributes)
+
+        self.distance_calculator = self.set_distance()
+
+    def set_distance(self) -> Any:
         distance_method = getattr(torch.nn, self.attributes.distance_method)
-        self.distance_calculator = distance_method(self.attributes.dimension)
+        distance_calculator = distance_method(self.attributes.dimension)
+        return distance_calculator
 
     @staticmethod
     def get_embedding_from_image(image: ImagePacket) -> torch.Tensor:
@@ -38,10 +49,9 @@ class EmbeddingComparison(Template):
         Returns:
             torch.Tensor: Extracted face embedding.
         """
-        return image.annotations[-1].embedding[0].unsqueeze(0)
+        return image.annotations[-1].embedding[0].unsqueeze(0)  # ty: ignore[unresolved-attribute, not-subscriptable]
 
-
-    def add_annotation(self, distance: torch.Tensor, image_packet:ImagePacket)->ImagePacket:
+    def add_annotation(self, distance: torch.Tensor, image_packet: ImagePacket) -> ImagePacket:
         """Adds annotation to the ImagePacket depending on the distance between embeddings.
 
         Args:
@@ -50,31 +60,34 @@ class EmbeddingComparison(Template):
 
         """
 
-        if self.attributes.distance_method=='PairwiseDistance':
-
+        if self.attributes.distance_method == "PairwiseDistance":
             distance = 1 - distance
         else:
-            distance = distance.squeeze(0).mean().item()
+            distance = torch.Tensor(distance.squeeze(0).mean().item())
         if distance > self.attributes.threshold:
-
-            image_packet.annotations[-1].extra_labels={'match': distance*100}
+            image_packet.annotations[-1].extra_labels = {"match": float(distance * 100)}
         else:
-            image_packet.annotations[-1].extra_labels = {'No match': distance*100}
-            #)
+            image_packet.annotations[-1].extra_labels = {"No match": float(distance * 100)}
+            # )
         return image_packet
 
     def execute(self, container: DataContainer) -> DataContainer:
         images = container.images
-        for i in range(0, len(container.images), 2):
+
+        for i in range(0, len(images), 2):
             embedding_1 = self.get_embedding_from_image(images[i])
-            embedding_2 = self.get_embedding_from_image(images[i+1]) if i + 1 <len(images) else []
-            if embedding_1 is not None and embedding_2 is not None:
+            embedding_2 = self.get_embedding_from_image(images[i + 1]) if i + 1 < len(images) else []
+            if embedding_1 is not None and embedding_2 is not None and self.distance_calculator is not None:
                 similarity = self.distance_calculator(embedding_1, embedding_2)
                 images[i] = self.add_annotation(similarity, images[i])
-                images[i+1] = self.add_annotation(similarity, images[i+1])
+                images[i + 1] = self.add_annotation(similarity, images[i + 1])
 
             else:
-
-                self.logger.debug('No embeddings to compare, returning container')
+                self.logger.debug("No embeddings to compare, returning container")
         return container
 
+    def reset_state(self, template_name: str | None = None) -> None:
+        _ = template_name
+        del self.distance_calculator
+        self.distance_calculator = None
+        self.distance_calculator = self.set_distance()

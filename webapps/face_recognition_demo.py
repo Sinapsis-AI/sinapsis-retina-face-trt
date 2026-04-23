@@ -21,4 +21,4 @@ def demo() -> gr.Blocks:
 
 if __name__ == "__main__":
     live_interface = demo()
-    live_interface.launch(share=GRADIO_SHARE_APP)
+    live_interface.launch(share=bool(GRADIO_SHARE_APP))
