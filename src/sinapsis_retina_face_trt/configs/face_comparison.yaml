@@ -2,7 +2,7 @@ agent:
   name: face_detection
   description: >
     Agent to produce face embeddings from face predicted by RetinaFace model.
-    Face embeddings are used to compute similarity score in webapp.  
+    Face embeddings are used to compute similarity score in webapp.
 
 templates:
 - template_name: InputTemplate-1

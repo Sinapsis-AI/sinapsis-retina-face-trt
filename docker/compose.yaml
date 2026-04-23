@@ -11,7 +11,7 @@ services:
     shm_size: '8gb'
     environment:
       PYTHONPATH: /lib/python3.10/:/app/.venv/lib/python3.10/site-packages
-      
+
       GRADIO_SHARE_APP: ${GRADIO_SHARE_APP:-false}
       PYTHONUNBUFFERED: 1
     volumes:

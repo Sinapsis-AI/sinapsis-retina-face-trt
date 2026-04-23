@@ -1,8 +1,8 @@
 agent:
   name: face_detection
   description: >
-    Agent to perform face detection to images loaded from a local dir, 
-    inference results with drawed bboxes are stored in disk. 
+    Agent to perform face detection to images loaded from a local dir,
+    inference results with drawed bboxes are stored in disk.
 
 templates:
 - template_name: InputTemplate-1

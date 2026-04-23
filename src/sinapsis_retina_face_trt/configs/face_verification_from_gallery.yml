@@ -25,7 +25,7 @@ templates:
     return_key_points: true
     confidence_threshold: 0.6
     local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
-  
+
 - template_name: FaceVerification-1
   class_name: FaceVerificationFromGallery
   template_input: RetinaFacePytorch-1
@@ -46,7 +46,7 @@ templates:
       return_key_points: true
       confidence_threshold: 0.6
       local_model_path: "/root/.cache/torch/hub/checkpoints/resnet50_2020-07-20.engine"
-      
+
 - template_name: BBoxDrawer
   class_name: BBoxDrawer
   template_input: FaceVerification-1
