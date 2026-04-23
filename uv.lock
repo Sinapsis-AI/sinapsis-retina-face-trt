@@ -2414,7 +2414,7 @@ wheels = [
 
 [[package]]
 name = "pre-commit"
-version = "4.5.0"
+version = "4.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cfgv" },
@@ -2423,9 +2423,9 @@ dependencies = [
     { name = "pyyaml" },
     { name = "virtualenv" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f4/9b/6a4ffb4ed980519da959e1cf3122fc6cb41211daa58dbae1c73c0e519a37/pre_commit-4.5.0.tar.gz", hash = "sha256:dc5a065e932b19fc1d4c653c6939068fe54325af8e741e74e88db4d28a4dd66b", size = 198428 }
+sdist = { url = "https://files.pythonhosted.org/packages/8e/22/2de9408ac81acbb8a7d05d4cc064a152ccf33b3d480ebe0cd292153db239/pre_commit-4.6.0.tar.gz", hash = "sha256:718d2208cef53fdc38206e40524a6d4d9576d103eb16f0fec11c875e7716e9d9", size = 198525 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5d/c4/b2d28e9d2edf4f1713eb3c29307f1a63f3d67cf09bdda29715a36a68921a/pre_commit-4.5.0-py2.py3-none-any.whl", hash = "sha256:25e2ce09595174d9c97860a95609f9f852c0614ba602de3561e267547f2335e1", size = 226429 },
+    { url = "https://files.pythonhosted.org/packages/80/6e/4b28b62ecb6aae56769c34a8ff1d661473ec1e9519e2d5f8b2c150086b26/pre_commit-4.6.0-py2.py3-none-any.whl", hash = "sha256:e2cf246f7299edcabcf15f9b0571fdce06058527f0a06535068a86d38089f29b", size = 226472 },
 ]
 
 [[package]]
@@ -3425,14 +3425,14 @@ wheels = [
 
 [[package]]
 name = "sinapsis"
-version = "0.2.24"
+version = "0.2.26"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sinapsis-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5f/3d/b3b1446c94419809aa8ebed91f9a7c219057e86c4b757d471a400172df25/sinapsis-0.2.24.tar.gz", hash = "sha256:878bf184d0c74b3afa1906570ced3a3292075ec365132d972958364afef1df35", size = 33200 }
+sdist = { url = "https://files.pythonhosted.org/packages/59/90/9d5e06ebc1394a83405050dfa36ff0efa8f08e241247b9cdc283c960c024/sinapsis-0.2.26.tar.gz", hash = "sha256:20fc1b8543821209088989908df41e08740c54522db03a48eaa977d3f3a77099", size = 33219 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/18/5e/c28a5020c9c5dc7f7aaadfde87c2127176ce48d48820c2bfd5fab8b06eeb/sinapsis-0.2.24-py3-none-any.whl", hash = "sha256:cde0ac06e13d0d092e7e599800a1f92f037e380d2032f3b630efc398c3a7fe26", size = 30644 },
+    { url = "https://files.pythonhosted.org/packages/c1/0b/eb6f2530ca7961f56159e73432b3c2a8e1e919de84db5d455779ede10f6d/sinapsis-0.2.26-py3-none-any.whl", hash = "sha256:3dc30ce0c87f82bbf648cd78cb6ffafba829146e227f8181918b6a7caba7b416", size = 30643 },
 ]
 
 [package.optional-dependencies]
@@ -3442,7 +3442,7 @@ webapp = [
 
 [[package]]
 name = "sinapsis-core"
-version = "0.2.4"
+version = "0.2.8"
 source = { registry = "https://pypi.sinapsis.tech/" }
 dependencies = [
     { name = "docstring-parser" },
@@ -3451,33 +3451,33 @@ dependencies = [
     { name = "pyyaml" },
 ]
 wheels = [
-    { url = "https://pypi.sinapsis.tech/sinapsis-core/sinapsis_core-0.2.4-py3-none-any.whl" },
+    { url = "https://pypi.sinapsis.tech/sinapsis-core/sinapsis_core-0.2.8-py3-none-any.whl" },
 ]
 
 [[package]]
 name = "sinapsis-data-readers"
-version = "0.1.22"
+version = "0.1.29"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sinapsis" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d5/29/eb42d3588a3982317c17adaf4f2e376bec8ccfcc89e61886600a58851d00/sinapsis_data_readers-0.1.22.tar.gz", hash = "sha256:b70e439e56c4e21b689e57bdfe1570b4ed7a1f329ba7dc8558802f3a9ca30665", size = 46009 }
+sdist = { url = "https://files.pythonhosted.org/packages/0e/cd/8cdd69e962a9d0294174e1638cf8450caf0c81203e509358b99daf8fa571/sinapsis_data_readers-0.1.29.tar.gz", hash = "sha256:041b557ae54303607f44343c729740aae3cd891eaa0b4887aca2ae48419389e6", size = 45183 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/72/19959cde89fdb90c51db78cb52e7922f649f7d398d5c56323a5504bac961/sinapsis_data_readers-0.1.22-py3-none-any.whl", hash = "sha256:893d34d3af89c934d901f94a2db9c43f9574626c25b0c6dda5d3003eb9d107c5", size = 61950 },
+    { url = "https://files.pythonhosted.org/packages/61/88/1a57c4ca30a2c94ec447b5b5d510c9d76ae42117b0cc916d82c97542386b/sinapsis_data_readers-0.1.29-py3-none-any.whl", hash = "sha256:25306ca2eaf6a4c80e965cfe06751ea6c228d98f8306738205184ad7554b1d1a", size = 61709 },
 ]
 
 [[package]]
 name = "sinapsis-data-visualization"
-version = "0.1.13"
+version = "0.1.14"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "numpy" },
     { name = "pandas" },
     { name = "sinapsis" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/00/01152c51f476bcfbc6a5162f7e8f788b5b367a41db6b3ed084b322f3b715/sinapsis_data_visualization-0.1.13.tar.gz", hash = "sha256:34b02053e4db3ee56629851b2233782f230e72582a75bc60ee4d503b534775d5", size = 37912 }
+sdist = { url = "https://files.pythonhosted.org/packages/e6/a8/eef9dea5319876ab41ea891125c4fbd09079fe9fa1a4b5fe60a333dd9f43/sinapsis_data_visualization-0.1.14.tar.gz", hash = "sha256:97f011750ddc539fbb16353c6a0593aaeb7a1e9c0f4e0e8355e30cd684986c8f", size = 37938 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4c/ba/5721ed3d5e1890f68defa4152626a052f97dbf77025acffb7b41864c8f6d/sinapsis_data_visualization-0.1.13-py3-none-any.whl", hash = "sha256:7a8e7e4709751fb13ba8670fa961a718f0763cf433f416c0c23e693d9b3f7bf8", size = 45627 },
+    { url = "https://files.pythonhosted.org/packages/35/b7/676f5462a666f911ba7ceda4659d47f0afc14faf4fe912e890c6e6ae18e4/sinapsis_data_visualization-0.1.14-py3-none-any.whl", hash = "sha256:dd39c9208502c64f42364e2049d5da43f60dcaffbe61ab7f50942476aa7167e6", size = 45932 },
 ]
 
 [package.optional-dependencies]
@@ -3487,27 +3487,28 @@ visualization-matplotlib = [
 
 [[package]]
 name = "sinapsis-data-writers"
-version = "0.1.16"
+version = "0.1.17"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sinapsis" },
     { name = "sinapsis-generic-data-tools" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a2/20/21e0db3133a411ac778c9a97622f801f8c6c1381f6f050a668d68334c829/sinapsis_data_writers-0.1.16.tar.gz", hash = "sha256:95187a44d071e2aa06fc7558ad683155223089620b3d0709b0f45e9193f19e2b", size = 29231 }
+sdist = { url = "https://files.pythonhosted.org/packages/d0/02/7cb0ee8ed74a499f6a439ce1b0f7930a45bfb5c54f676a345686f160897b/sinapsis_data_writers-0.1.17.tar.gz", hash = "sha256:c2d9c5b29a4e69a6dba76eba093ac884892e27fc1f36dc93513b9842ed1bfc23", size = 29250 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/f1/c3c7c8b1ec9b4e3b6d80da9637c4ccb2b1af4315b3480d2b91115aa2b574/sinapsis_data_writers-0.1.16-py3-none-any.whl", hash = "sha256:0de922aa7a6d4fd1917d28fd8e3a71882a9ffec787c4e139628cb209cf8cc894", size = 35125 },
+    { url = "https://files.pythonhosted.org/packages/b8/33/98084b187133a3c6b3aae0f03dbbcc02444653880dae2e80758e5c11047e/sinapsis_data_writers-0.1.17-py3-none-any.whl", hash = "sha256:21f17b1007fed770d361370a7464c0e6e1f1c56099ae4085c06351fe1fa8bb5c", size = 35352 },
 ]
 
 [[package]]
 name = "sinapsis-framework-converter"
-version = "0.1.8"
+version = "0.1.11"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sinapsis" },
+    { name = "sinapsis-core" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/64/ba/3a71564815cbbd057a5df2bec9452062dc95d7bba30bc7eb90b169e35566/sinapsis_framework_converter-0.1.8.tar.gz", hash = "sha256:ff9e18010ac369568a3222c782ca15fc2701688a5d1002f061dac71c6a5e565f", size = 28293 }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/97/6f100e563893903efb39386e48bb1a71dbee5960ddb242f1daf9157af108/sinapsis_framework_converter-0.1.11.tar.gz", hash = "sha256:65bfbd5a24530b1139ea6d571d0683c9d424d4302b1a195423ce769e6a340e2e", size = 29094 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e3/11/c964e0e0604d5945c5ec7df073bee3a17d5c31a77964538366e10a791c6b/sinapsis_framework_converter-0.1.8-py3-none-any.whl", hash = "sha256:9249ab5815adcb97a040e780ee7e7215787b29485b9f4da49341adb9dd1774c5", size = 34534 },
+    { url = "https://files.pythonhosted.org/packages/07/f8/d27b1ea4ad6074381d7b6f0379bb245107292e6fd12238e9adf2683d2093/sinapsis_framework_converter-0.1.11-py3-none-any.whl", hash = "sha256:933fbebcd5837d93a4efb59254592605a49db25b5a9f229345a9f5c28f7a1cba", size = 35107 },
 ]
 
 [package.optional-dependencies]
@@ -3537,13 +3538,14 @@ wheels = [
 
 [[package]]
 name = "sinapsis-retina-face-trt"
-version = "0.1.15"
+version = "0.1.19"
 source = { virtual = "." }
 dependencies = [
     { name = "packaging" },
     { name = "polars" },
     { name = "retinaface-pytorch" },
     { name = "sinapsis" },
+    { name = "sinapsis-core" },
     { name = "sinapsis-data-readers" },
 ]
 
@@ -3574,6 +3576,7 @@ webapp-gradio = [
 dev = [
     { name = "pre-commit" },
     { name = "ruff" },
+    { name = "ty" },
 ]
 
 [package.metadata]
@@ -3584,6 +3587,7 @@ requires-dist = [
     { name = "retinaface-pytorch", specifier = ">=0.0.7" },
     { name = "sinapsis", specifier = ">=0.2.3" },
     { name = "sinapsis", extras = ["webapp"], marker = "extra == 'webapp-gradio'", specifier = ">=0.2.3" },
+    { name = "sinapsis-core", specifier = ">=0.2.4" },
     { name = "sinapsis-data-readers", specifier = ">=0.1.2" },
     { name = "sinapsis-data-visualization", extras = ["visualization-matplotlib"], marker = "extra == 'sinapsis-data-visualization'", specifier = ">=0.1.0" },
     { name = "sinapsis-data-writers", marker = "extra == 'sinapsis-data-writers'", specifier = ">=0.1.1" },
@@ -3596,6 +3600,7 @@ requires-dist = [
 dev = [
     { name = "pre-commit", specifier = ">=4.0.1" },
     { name = "ruff", specifier = ">=0.8.3" },
+    { name = "ty", specifier = ">=0.0.30" },
 ]
 
 [[package]]
@@ -4105,6 +4110,30 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/45/27/14cc3101409b9b4b9241d2ba7deaa93535a217a211c86c4cc7151fb12181/triton-3.0.0-1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:e1efef76935b2febc365bfadf74bcb65a6f959a9872e5bddf44cc9e0adce1e1a", size = 209376304 },
     { url = "https://files.pythonhosted.org/packages/33/3e/a2f59384587eff6aeb7d37b6780de7fedd2214935e27520430ca9f5b7975/triton-3.0.0-1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:5ce8520437c602fb633f1324cc3871c47bee3b67acf9756c1a66309b60e3216c", size = 209438883 },
     { url = "https://files.pythonhosted.org/packages/fe/7b/7757205dee3628f75e7991021d15cd1bd0c9b044ca9affe99b50879fc0e1/triton-3.0.0-1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:34e509deb77f1c067d8640725ef00c5cbfcb2052a1a3cb6a6d343841f92624eb", size = 209464695 },
+]
+
+[[package]]
+name = "ty"
+version = "0.0.31"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/31/cc/5ea5d3a72216c8c2bf77d83066dd4f3553532d0aacc03d4a8397dd9845e1/ty-0.0.31.tar.gz", hash = "sha256:4a4094292d9671caf3b510c7edf36991acd9c962bb5d97205374ffed9f541c45", size = 5516619 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b0/10/ea805cbbd75d5d50792551a2b383de8521eeab0c44f38c73e12819ced65e/ty-0.0.31-py3-none-linux_armv6l.whl", hash = "sha256:761651dc17ad7bc0abfc1b04b3f0e84df263ed435d34f29760b3da739ab02d35", size = 10834749 },
+    { url = "https://files.pythonhosted.org/packages/d9/4c/fabf951850401d24d36b21bced088a366c6827e1c37dab4523afff84c4b2/ty-0.0.31-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:c529922395a07231c27488f0290651e05d27d149f7e0aa807678f1f7e9c58a5e", size = 10626012 },
+    { url = "https://files.pythonhosted.org/packages/04/b0/4a5aff88d2544f19514a59c8f693d63144aa7307fe2ee5df608333ab5460/ty-0.0.31-py3-none-macosx_11_0_arm64.whl", hash = "sha256:5f345df2b87d747859e72c2cbc9be607ea1bbc8bc93dd32fa3d03ea091cb4fee", size = 10075790 },
+    { url = "https://files.pythonhosted.org/packages/d5/73/9d4dcad12cd4e85274014f2c0510ef93f590b2a1e5148de3a9f276098dad/ty-0.0.31-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d4b207eddcfbafd376132689d3435b14efcb531289cb59cd961c6a611133bd54", size = 10590286 },
+    { url = "https://files.pythonhosted.org/packages/47/45/fe40adde18692359ded174ae7ddbfac056e876eb0f43b65be74fde7f6072/ty-0.0.31-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:663778b220f357067488ce68bfc52335ccbd161549776f70dcbde6bbde82f77a", size = 10623824 },
+    { url = "https://files.pythonhosted.org/packages/2e/e8/0ffa2e09b548e6daa9ebc368d68b767dc2405ca4cbeadb7ede0e2cb21059/ty-0.0.31-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:3506cfe87dfade0fb2960dd4fffd4fd8089003587b3445c0a1a295c9d83764fb", size = 11156864 },
+    { url = "https://files.pythonhosted.org/packages/08/e9/fd44c2075115d569593ee9473d7e2a38b750fd7e783421c95eb528c15df5/ty-0.0.31-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:8b3f3d8492f08e81916026354c1d1599e9ddfa1241804141a74d5662fc710085", size = 11696401 },
+    { url = "https://files.pythonhosted.org/packages/4e/50/35aad8eadf964d23e2a4faa5b38a206aa85c78833c8ce335dddd2c34ba63/ty-0.0.31-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:a97de32ee6a619393a4c495e056a1c547de7877510f3152e61345c71d774d2d0", size = 11374903 },
+    { url = "https://files.pythonhosted.org/packages/c8/37/01eccd25d23f5aaa7f7ff1a87b5b215469f6b202cf689a1812b71c1e7f6b/ty-0.0.31-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c906354ce441e342646582bc9b8f48a676f79f3d061e25de15ff870e015ca14e", size = 11206624 },
+    { url = "https://files.pythonhosted.org/packages/f4/70/baad2914cb097453f127a221f8addb2b41926098059cd773c75e6a662fc4/ty-0.0.31-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:275bb7c82afcbf89fe2dbef1b2692f2bc98451f1ee2c8eb809ddd91317822388", size = 10575089 },
+    { url = "https://files.pythonhosted.org/packages/83/12/bae3a7bba2e785eb72ce00f9da70eedcb8c5e8299efecbd16e6e436abd82/ty-0.0.31-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:405da247027c6efd1e264886b6ac4a86ab3a4f09200b02e33630efe85f119e53", size = 10642315 },
+    { url = "https://files.pythonhosted.org/packages/93/9e/cad04d5d839bc60355cea98c7e09d724ea65f47184def0fae8b90dc54591/ty-0.0.31-py3-none-musllinux_1_2_i686.whl", hash = "sha256:54d9835608eed196853d6643f645c50ce83bcc7fe546cdb3e210c1bcf7c58c09", size = 10834473 },
+    { url = "https://files.pythonhosted.org/packages/e3/ba/84112d280182d37690d3d2b4018b2667e42bc281585e607015635310016a/ty-0.0.31-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:5ee11be9b07e8c0c6b455ff075a0abe4f194de9476f57624db98eec9df618355", size = 11315785 },
+    { url = "https://files.pythonhosted.org/packages/50/9f/ac42dc223d7e0950e97a1854567a8b3e7fe09ad7375adbf91bfb43290482/ty-0.0.31-py3-none-win32.whl", hash = "sha256:7286587aacf3eef0956062d6492b893b02f82b0f22c5e230008e13ff0d216a8b", size = 10187657 },
+    { url = "https://files.pythonhosted.org/packages/75/3e/57ba7ea7ecb2f4751644ba91756e2be70e33ef5952c0c41a256a0e4c2437/ty-0.0.31-py3-none-win_amd64.whl", hash = "sha256:81134e25d2a2562ab372f24de8f9bd05034d27d30377a5d7540f259791c6234c", size = 11205258 },
+    { url = "https://files.pythonhosted.org/packages/88/39/bca669095ccf0a400af941fdf741578d4c2d6719f1b7f10e6dbec10aa862/ty-0.0.31-py3-none-win_arm64.whl", hash = "sha256:e9cb15fad26545c6a608f40f227af3a5513cb376998ca6feddd47ca7d93ffafa", size = 10590392 },
 ]
 
 [[package]]

@@ -1,6 +1,6 @@
 [project]
 name = "sinapsis-retina-face-trt"
-version = "0.1.16"
+version = "0.1.19"
 description = "trt version of retina face and facenet"
 authors = [
     {name = "SinapsisAI", email = "dev@sinapsis.tech"},
@@ -13,6 +13,7 @@ dependencies = [
     "polars>=1.26.0",
     "retinaface-pytorch>=0.0.7",
     "sinapsis>=0.2.3",
+    "sinapsis-core>=0.2.4",
     "sinapsis-data-readers>=0.1.2",
 ]
 
@@ -20,6 +21,7 @@ dependencies = [
 dev = [
     "ruff>=0.8.3",
     "pre-commit>=4.0.1",
+    "ty>=0.0.30",
 ]
 [project.optional-dependencies]
 model-conversion = [
